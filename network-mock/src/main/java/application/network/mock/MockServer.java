@@ -3,7 +3,9 @@ package application.network.mock;
 import application.network.api.Message;
 import application.network.api.server.Server;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -76,6 +78,7 @@ public class MockServer implements Server
         if (!open) {
             throw new IOException("MockServer is not running yet, see the listen() method");
         }
+        new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(message);
     }
 
     @Override
@@ -84,6 +87,7 @@ public class MockServer implements Server
         if (!open) {
             throw new IOException("MockServer is not running yet, see the listen() method");
         }
+        new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(message);
     }
 
     @Override

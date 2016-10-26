@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -95,7 +96,18 @@ public class MockServerTest
         server.listen(100);
         server.send(mock(Message.class), "");
     }
-    
+
+    @Test(expected = NotSerializableException.class)
+    public void testExceptionWhenSendingUnserializableMessage() throws IOException
+    {
+        class UnserializableMessage implements Message {
+            private MockServer server = MockServerTest.this.server;
+        }
+
+        server.listen(1000);
+        server.send(new UnserializableMessage(), "client5");
+    }
+
     @Test(expected = IOException.class)
     public void testExceptionWhenBroadcastingWithoutServerStarted() throws IOException
     {
@@ -107,6 +119,17 @@ public class MockServerTest
     {
         server.listen(1000);
         server.broadcast(mock(Message.class));
+    }
+
+    @Test(expected = NotSerializableException.class)
+    public void testExceptionWhenBroadcastUnserializableMessage() throws IOException
+    {
+        class UnserializableMessage implements Message {
+            private MockServer server = MockServerTest.this.server;
+        }
+
+        server.listen(1000);
+        server.broadcast(new UnserializableMessage());
     }
 
     @Test(expected = NullPointerException.class)

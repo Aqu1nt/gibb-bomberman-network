@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.util.function.Consumer;
 
 import static org.mockito.Matchers.eq;
@@ -90,6 +91,17 @@ public class MockServerProxyTest
         client.send(mock(Message.class));
         thrown.expect(NullPointerException.class);
         client.send(null);
+    }
+
+    @Test(expected = NotSerializableException.class)
+    public void testExceptionWhenSendingUnserializableMessage() throws IOException, LobbyFullException, ClientIdInUseException
+    {
+        class UnserializableMessage implements Message {
+            private MockServerProxy client = MockServerProxyTest.this.client;
+        }
+
+        client.connect("", "", 0);
+        client.send(new UnserializableMessage());
     }
 
     @Test

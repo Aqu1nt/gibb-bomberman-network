@@ -5,7 +5,9 @@ import application.network.api.client.ClientIdInUseException;
 import application.network.api.client.LobbyFullException;
 import application.network.api.client.ServerProxy;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -71,6 +73,7 @@ public class MockServerProxy implements ServerProxy
         if (!connected) {
             throw new IOException("MockServerProxy is not connected yet, see the connect() method");
         }
+        new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(message);
     }
 
     @Override

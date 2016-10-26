@@ -1,9 +1,9 @@
 package application.network.mock;
 
-import application.network.protocol.Message;
-import application.network.protocol.client.ClientIdInUseException;
-import application.network.protocol.client.LobbyFullException;
-import application.network.protocol.client.ServerProxy;
+import application.network.api.Message;
+import application.network.api.client.ClientIdInUseException;
+import application.network.api.client.LobbyFullException;
+import application.network.api.client.ServerProxy;
 
 import java.io.IOException;
 import java.util.ArrayList;

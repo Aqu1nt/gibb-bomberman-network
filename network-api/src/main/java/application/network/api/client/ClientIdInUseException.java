@@ -1,4 +1,4 @@
-package application.network.protocol.client;
+package application.network.api.client;
 
 /**
  * Exception thrown when a client attempts to connect with

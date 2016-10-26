@@ -1,7 +1,7 @@
-package application.network.protocol;
+package application.network.api;
 
-import application.network.protocol.client.ServerProxy;
-import application.network.protocol.server.Server;
+import application.network.api.client.ServerProxy;
+import application.network.api.server.Server;
 
 /**
  * Container welcher ein Netzwerkmodul spezifiziert

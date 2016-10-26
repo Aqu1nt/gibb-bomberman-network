@@ -1,6 +1,6 @@
-package application.network.protocol.client;
+package application.network.api.client;
 
-import application.network.protocol.Message;
+import application.network.api.Message;
 
 import java.util.function.Consumer;
 

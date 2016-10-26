@@ -1,7 +1,7 @@
 package application.network.mock;
 
-import application.network.protocol.Message;
-import application.network.protocol.server.Server;
+import application.network.api.Message;
+import application.network.api.server.Server;
 
 import java.io.IOException;
 import java.util.ArrayList;

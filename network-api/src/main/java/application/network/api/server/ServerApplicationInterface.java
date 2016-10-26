@@ -1,6 +1,6 @@
-package application.network.protocol.server;
+package application.network.api.server;
 
-import application.network.protocol.Message;
+import application.network.api.Message;
 
 import java.util.function.BiConsumer;
 

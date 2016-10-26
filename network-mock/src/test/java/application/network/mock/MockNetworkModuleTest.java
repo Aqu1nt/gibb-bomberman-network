@@ -1,6 +1,6 @@
 package application.network.mock;
 
-import application.network.protocol.Network;
+import application.network.api.Network;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.sameInstance;

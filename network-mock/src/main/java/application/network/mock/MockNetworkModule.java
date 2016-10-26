@@ -1,8 +1,8 @@
 package application.network.mock;
 
-import application.network.protocol.NetworkModule;
-import application.network.protocol.client.ServerProxy;
-import application.network.protocol.server.Server;
+import application.network.api.NetworkModule;
+import application.network.api.client.ServerProxy;
+import application.network.api.server.Server;
 
 /**
  * Network modul als Hilfe für die Implementierung

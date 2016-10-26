@@ -7,5 +7,5 @@ test {
 }
 
 dependencies {
-    compile project(":network-protocol");
+    compile project(":network-api");
 }

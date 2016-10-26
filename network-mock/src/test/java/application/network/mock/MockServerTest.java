@@ -1,6 +1,6 @@
 package application.network.mock;
 
-import application.network.protocol.Message;
+import application.network.api.Message;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

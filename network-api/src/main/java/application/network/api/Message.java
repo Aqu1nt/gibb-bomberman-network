@@ -1,4 +1,4 @@
-package application.network.protocol;
+package application.network.api;
 
 import java.io.Serializable;
 

@@ -1,6 +1,6 @@
-package application.network.protocol;
+package application.network.api;
 
-import application.network.protocol.server.Server;
+import application.network.api.server.Server;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

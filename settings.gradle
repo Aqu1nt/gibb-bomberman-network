@@ -1,4 +1,4 @@
 rootProject.name = 'network'
 
-include "network-protocol"
+include "network-api"
 include "network-mock"

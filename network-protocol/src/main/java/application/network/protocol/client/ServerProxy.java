@@ -26,6 +26,7 @@ public interface ServerProxy
    * @throws IOException wenn die Verbindung fehlschlägt
    * @throws ClientIdInUseException wenn die gegebene client id bereits exisitert auf dem server
    * @throws LobbyFullException wenn die Lobby keine weiteren Spieler zulässt
+   * @throws NullPointerException wenn die clientId oder die ip null ist
    */
   void connect(String clientId, String ip, int port) throws IOException, ClientIdInUseException, LobbyFullException;
 
@@ -38,6 +39,7 @@ public interface ServerProxy
    * Sendet ein Nachrichtenobjekt an den Server. Diese Methode muss innerhalb der Netzwerkschicht
    * implementiert werden.
    * @param message Das Nachrichtenobjekt, welches an den Server gesendet werden soll.
+   * @throws NullPointerException wenn die Message null ist
    */
   void send(Message message) throws IOException;
 
@@ -45,6 +47,7 @@ public interface ServerProxy
    * Registriert einen Handler welcher mit jeder eingehenden Nachricht
    * aufgerufen wird
    * @param handler der Handler
+   * @throws NullPointerException wenn der handler null ist
    */
   void addMessageHandler(Consumer<Message> handler);
 
@@ -52,6 +55,7 @@ public interface ServerProxy
    * Registriert einen Handler welcher in jedem Fall aufgerufen wird wenn
    * die Socketverbindung zum Server geschlossen wird
    * @param handler der Handler
+   * @throws NullPointerException wenn der handler null ist
    */
   void addServerDisconnectedHandler(Runnable handler);
 }

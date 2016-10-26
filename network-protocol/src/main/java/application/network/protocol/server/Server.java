@@ -23,7 +23,6 @@ public interface Server
    * welche auf diesem Port eingehen annehmen.
    * @param port der Port auf welchem der Server gestartet wird
    * @throws IOException wenn der Port nicht geöffnet werden konnte
-   * @throws IllegalStateException wenn der Server bereits läuft
    */
   void listen(int port) throws IOException, IllegalStateException;
 
@@ -38,12 +37,14 @@ public interface Server
    * Schickt die gegebene Nachricht an den angegebenen Client
    * @param message die Nachricht welche verschickt werden soll
    * @param clientId die Id des Ziel clients
+   * @throws NullPointerException wenn die Message oder die clientId null ist
    */
   void send(Message message, String clientId) throws IOException;
 
   /**
    * Verschickt eine Nachricht an alle verbundenen Clients
    * @param message die Nachricht welche gebroadcastet wird
+   * @throws NullPointerException wenn die Message null ist
    */
   void broadcast(Message message) throws IOException;
 
@@ -51,12 +52,14 @@ public interface Server
    * Registriert einen Handler welcher all eingehenden Nachrichten zusammen
    * mit ihrer ClientId erhält und diese weiterverarbeiten kann
    * @param handler der Handler welche alle eingehenden Nachrichten erhält
+   * @throws NullPointerException wenn der handler null ist
    */
   void addMessageHandler(BiConsumer<Message, String> handler);
 
   /**
    * Registriert einen Handler welcher einmalig pro neuer Client Verbindung aufgerufen wird
    * @param handler der Handler
+   * @throws NullPointerException wenn der client null ist
    */
   void addClientConnectedHandler(Consumer<String> handler);
 
@@ -64,6 +67,7 @@ public interface Server
    * Registriert einen Handler welcher aufgerufen wird sobald ein Client
    * auf eine beliebige Weise die Verbindung zum Server schliesst
    * @param handler wird aufgerufen mit der Id des Clients dessen Verbindung geschlossen wurde
+   * @throws NullPointerException wenn der handler null ist
    */
   void addClientDisconnectedHandler(Consumer<String> handler);
 }

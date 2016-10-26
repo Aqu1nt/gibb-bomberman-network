@@ -1,5 +1,11 @@
 version '1.0'
 
+test {
+    filter {
+        includeTestsMatching "*.NetworkMockSuite"
+    }
+}
+
 dependencies {
     compile project(":network-protocol");
 }

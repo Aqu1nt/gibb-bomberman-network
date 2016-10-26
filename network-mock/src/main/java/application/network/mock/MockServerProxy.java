@@ -8,6 +8,7 @@ import application.network.protocol.client.ServerProxy;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class MockServerProxy implements ServerProxy
@@ -26,19 +27,20 @@ public class MockServerProxy implements ServerProxy
 
     public static void simulateServerDisconnect()
     {
-        instance.serverDisconnectedHandlers.forEach(Runnable::run);
+        get().serverDisconnectedHandlers.forEach(Runnable::run);
+        get().connected = false;
     }
 
     public static void simulateMessage(Message message)
     {
-        instance.messageHandlers.forEach(h -> h.accept(message));
+        get().messageHandlers.forEach(h -> h.accept(message));
     }
 
     public static void reset()
     {
-        instance.connected = false;
-        instance.messageHandlers = new ArrayList<>();
-        instance.serverDisconnectedHandlers = new ArrayList<>();
+        get().connected = false;
+        get().messageHandlers = new ArrayList<>();
+        get().serverDisconnectedHandlers = new ArrayList<>();
     }
 
     private boolean connected;
@@ -48,6 +50,8 @@ public class MockServerProxy implements ServerProxy
     @Override
     public void connect(String clientId, String ip, int port) throws IOException, ClientIdInUseException, LobbyFullException
     {
+        Objects.requireNonNull(clientId);
+        Objects.requireNonNull(ip);
         if (connected) {
             throw new IOException("MockServerProxy is already connected!");
         }
@@ -63,6 +67,7 @@ public class MockServerProxy implements ServerProxy
     @Override
     public void send(Message message) throws IOException
     {
+        Objects.requireNonNull(message);
         if (!connected) {
             throw new IOException("MockServerProxy is not connected yet, see the connect() method");
         }
@@ -71,12 +76,12 @@ public class MockServerProxy implements ServerProxy
     @Override
     public void addMessageHandler(Consumer<Message> handler)
     {
-        messageHandlers.add(handler);
+        messageHandlers.add(Objects.requireNonNull(handler));
     }
 
     @Override
     public void addServerDisconnectedHandler(Runnable serverDisconnectedHandler)
     {
-        serverDisconnectedHandlers.add(serverDisconnectedHandler);
+        serverDisconnectedHandlers.add(Objects.requireNonNull(serverDisconnectedHandler));
     }
 }

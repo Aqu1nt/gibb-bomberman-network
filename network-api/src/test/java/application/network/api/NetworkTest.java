@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.reflect.Whitebox;
 
 import java.util.List;
 import java.util.ServiceLoader;
@@ -42,8 +41,8 @@ public class NetworkTest
     @SuppressWarnings("unchecked")
     public void setupEnvironment() throws Exception
     {
-        Whitebox.setInternalState(Network.class, "usedModule", (NetworkModule) null);
-        Whitebox.setInternalState(Network.class, "moduleEvaluationStrategy", Network.DEFAULT_MODULE_EVALUATION_STRATEGY);
+        Network.usedModule = null;
+        Network.moduleEvaluationStrategy = Network.DEFAULT_MODULE_EVALUATION_STRATEGY;
         module = mock(NetworkModule.class);
         serviceLoader = mock(ServiceLoader.class);
         doAnswer(i -> { i.getArgumentAt(0, Consumer.class).accept(module); return null; }).when(serviceLoader).forEach(any());

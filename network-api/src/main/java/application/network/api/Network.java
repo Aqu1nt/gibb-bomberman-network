@@ -31,12 +31,12 @@ public final class Network
      * benutzt wird um die Instanzen von {@link Server} und {@link ServerProxy}
      * zu erstellen
      */
-    private static NetworkModule usedModule = null;
+    protected static NetworkModule usedModule = null;
 
     /**
      * Die Strategie welche benutzt wird um aus mehreren verfügbaren Modulen das richtige auszuwählen
      */
-    private static Function<List<NetworkModule>, NetworkModule> moduleEvaluationStrategy = DEFAULT_MODULE_EVALUATION_STRATEGY;
+    protected static Function<List<NetworkModule>, NetworkModule> moduleEvaluationStrategy = DEFAULT_MODULE_EVALUATION_STRATEGY;
 
     /**
      * @param module das Modul welches verwendet werden soll

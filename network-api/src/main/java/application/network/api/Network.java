@@ -39,6 +39,16 @@ public final class Network
     protected static Function<List<NetworkModule>, NetworkModule> moduleEvaluationStrategy = DEFAULT_MODULE_EVALUATION_STRATEGY;
 
     /**
+     * Die singleton {@link Server} instanz
+     */
+    protected static Server serverInstance = null;
+
+    /**
+     * Die singleton {@link ServerProxy} instanz
+     */
+    protected static ServerProxy clientInstance = null;
+
+    /**
      * @param module das Modul welches verwendet werden soll
      * @throws IllegalStateException wenn bereits ein anderes Modul registriert wurde
      */
@@ -66,6 +76,36 @@ public final class Network
     }
 
     /**
+     * Diese Method gibt einen Singleton Server zurück, sprich die Method kann so oft
+     * wie möglich aufgerufen werden, es wird maximal 1 {@link Server} Objekt erstellt
+     * @return den {@link Server} Singleton
+     */
+    public synchronized static Server getServer()
+    {
+        if (serverInstance == null)
+        {
+            serverInstance = createServer();
+        }
+        return serverInstance;
+    }
+
+    /**
+     * Diese Method gibt einen Singleton Server zurück, sprich die Method kann so oft
+     * wie möglich aufgerufen werden, es wird maximal 1 {@link ServerProxy} Objekt erstellt
+     * @return den {@link ServerProxy} Singleton
+     */
+    public synchronized static ServerProxy getClient()
+    {
+        if (clientInstance == null)
+        {
+            clientInstance = createClient();
+        }
+        return clientInstance;
+    }
+
+    /**
+     * Im gegensatz zu der {@link #getServer()} method welche einen Singleton (immer die gleiche instanz)
+     * zurückgibt, wird bei jedem aufruf dieser method eine NEUE INSTANZ erstellt
      * @return eine neue {@link Server} instanz welche abhängig vom gegebenen Networking Modul ist
      */
     public synchronized static Server createServer()

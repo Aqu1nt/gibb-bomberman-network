@@ -1,5 +1,6 @@
 package application.network.api;
 
+import application.network.api.client.ServerProxy;
 import application.network.api.server.Server;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import java.util.ServiceLoader;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -42,8 +44,12 @@ public class NetworkTest
     public void setupEnvironment() throws Exception
     {
         Network.usedModule = null;
+        Network.clientInstance = null;
+        Network.serverInstance = null;
         Network.moduleEvaluationStrategy = Network.DEFAULT_MODULE_EVALUATION_STRATEGY;
         module = mock(NetworkModule.class);
+        when(module.createServer()).then(i -> mock(Server.class));
+        when(module.createClient()).then(i -> mock(ServerProxy.class));
         serviceLoader = mock(ServiceLoader.class);
         doAnswer(i -> { i.getArgumentAt(0, Consumer.class).accept(module); return null; }).when(serviceLoader).forEach(any());
         mockStatic(ServiceLoader.class);
@@ -120,5 +126,31 @@ public class NetworkTest
     public void testNullCustomEvaluationStrategy()
     {
         Network.setModuleEvaluationStrategy(null);
+    }
+
+    @Test
+    public void testSingletonMethodsCreateOnlyOneObject()
+    {
+        Server server1 = Network.getServer();
+        Server server2 = Network.getServer();
+        ServerProxy client1 = Network.getClient();
+        ServerProxy client2 = Network.getClient();
+        verify(module).createServer();
+        verify(module).createClient();
+        assertThat(server1, is(sameInstance(server2)));
+        assertThat(client1, is(sameInstance(client2)));
+    }
+
+    @Test
+    public void testFactoryMethodsCreateMultipleObjects()
+    {
+        Server server1 = Network.createServer();
+        Server server2 = Network.createServer();
+        ServerProxy client1 = Network.createClient();
+        ServerProxy client2 = Network.createClient();
+        verify(module, times(2)).createServer();
+        verify(module, times(2)).createClient();
+        assertThat(server1, is(not(sameInstance(server2))));
+        assertThat(client1, is(not(sameInstance(client2))));
     }
 }

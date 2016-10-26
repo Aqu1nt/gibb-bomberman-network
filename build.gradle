@@ -1,0 +1,20 @@
+group 'bomberman'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.11'
+        compile group: 'org.powermock', name: 'powermock-api-mockito', version: '1.6.5'
+        compile group: 'org.powermock', name: 'powermock-module-junit4', version: '1.6.5'
+    }
+}

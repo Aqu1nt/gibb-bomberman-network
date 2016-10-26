@@ -22,9 +22,10 @@ public interface Server
    * Methode abgeschlossen ist, wird der Server alle neuen Verbindungen
    * welche auf diesem Port eingehen annehmen.
    * @param port der Port auf welchem der Server gestartet wird
-   * @throws IOException when der Port nicht geöffnet werden konnte
+   * @throws IOException wenn der Port nicht geöffnet werden konnte
+   * @throws IllegalStateException wenn der Server bereits läuft
    */
-  void listen(int port) throws IOException;
+  void listen(int port) throws IOException, IllegalStateException;
 
   /**
    * Stoppt den Server, dieser Methodenaufruf hat zur Folge
@@ -44,7 +45,7 @@ public interface Server
    * Verschickt eine Nachricht an alle verbundenen Clients
    * @param message die Nachricht welche gebroadcastet wird
    */
-  void broadcast(Message message);
+  void broadcast(Message message) throws IOException;
 
   /**
    * Registriert einen Handler welcher all eingehenden Nachrichten zusammen
@@ -55,14 +56,14 @@ public interface Server
 
   /**
    * Registriert einen Handler welcher einmalig pro neuer Client Verbindung aufgerufen wird
-   * @param clientConnectedHandler der Handler
+   * @param handler der Handler
    */
-  void addClientConnectedHandler(Consumer<String> clientConnectedHandler);
+  void addClientConnectedHandler(Consumer<String> handler);
 
   /**
    * Registriert einen Handler welcher aufgerufen wird sobald ein Client
    * auf eine beliebige Weise die Verbindung zum Server schliesst
-   * @param disconnectHandler wird aufgerufen mit der Id des Clients dessen Verbindung geschlossen wurde
+   * @param handler wird aufgerufen mit der Id des Clients dessen Verbindung geschlossen wurde
    */
-  void addClientDisconnectedHandler(Consumer<String> disconnectHandler);
+  void addClientDisconnectedHandler(Consumer<String> handler);
 }

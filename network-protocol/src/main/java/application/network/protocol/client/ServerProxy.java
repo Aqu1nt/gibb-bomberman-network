@@ -51,7 +51,7 @@ public interface ServerProxy
   /**
    * Registriert einen Handler welcher in jedem Fall aufgerufen wird wenn
    * die Socketverbindung zum Server geschlossen wird
-   * @param serverDisconnectedHandler der Handler
+   * @param handler der Handler
    */
-  void addServerDisconnectedHandler(Runnable serverDisconnectedHandler);
+  void addServerDisconnectedHandler(Runnable handler);
 }

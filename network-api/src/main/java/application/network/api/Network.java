@@ -16,7 +16,8 @@ public final class Network
     /**
      * Die Wähl Strategie welche standardmässig verwendet wird um das benutzte Modul zu wählen
      */
-    public final static Function<List<NetworkModule>,NetworkModule> DEFAULT_MODULE_EVALUATION_STRATEGY = list -> {
+    public final static Function<List<NetworkModule>,NetworkModule> DEFAULT_MODULE_EVALUATION_STRATEGY = list ->
+    {
         if (list.isEmpty()) {
             throw new IllegalStateException("No provided NetworkModule found!");
         }

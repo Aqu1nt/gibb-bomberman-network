@@ -6,6 +6,7 @@ import application.network.api.server.Server;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -71,23 +72,36 @@ public class MockServer implements Server
     }
 
     @Override
-    public void send(Message message, String clientId) throws IOException
+    public void send(Message message, String clientId)
     {
-        Objects.requireNonNull(message);
-        Objects.requireNonNull(clientId);
-        if (!open) {
-            throw new IOException("MockServer is not running yet, see the listen() method");
+        try
+        {
+            Objects.requireNonNull(message);
+            Objects.requireNonNull(clientId);
+            if (!open)
+            {
+                throw new IOException("MockServer is not running yet, see the listen() method");
+            }
+            new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(message);
+        } catch (IOException e)
+        {
+            throw new UncheckedIOException(e);
         }
-        new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(message);
     }
 
     @Override
-    public void broadcast(Message message) throws IOException
+    public void broadcast(Message message)
     {
-        if (!open) {
-            throw new IOException("MockServer is not running yet, see the listen() method");
+        try
+        {
+            if (!open) {
+                throw new IOException("MockServer is not running yet, see the listen() method");
+            }
+            new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(message);
+        } catch (IOException e)
+        {
+            throw new UncheckedIOException(e);
         }
-        new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(message);
     }
 
     @Override

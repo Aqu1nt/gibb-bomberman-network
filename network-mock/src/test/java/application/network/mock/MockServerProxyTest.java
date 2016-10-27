@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
-import java.io.NotSerializableException;
+import java.io.UncheckedIOException;
 import java.util.function.Consumer;
 
 import static org.mockito.Matchers.eq;
@@ -78,7 +78,7 @@ public class MockServerProxyTest
         client.disconnect();
     }
 
-    @Test(expected = IOException.class)
+    @Test(expected = UncheckedIOException.class)
     public void testExceptionWhenSendWhileNotConnected() throws IOException
     {
         client.send(mock(Message.class));
@@ -93,7 +93,7 @@ public class MockServerProxyTest
         client.send(null);
     }
 
-    @Test(expected = NotSerializableException.class)
+    @Test(expected = UncheckedIOException.class)
     public void testExceptionWhenSendingUnserializableMessage() throws IOException, LobbyFullException, ClientIdInUseException
     {
         class UnserializableMessage implements Message {

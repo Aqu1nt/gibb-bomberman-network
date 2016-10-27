@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
-import java.io.NotSerializableException;
+import java.io.UncheckedIOException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -84,8 +84,8 @@ public class MockServerTest
         server.shutdown();
     }
 
-    @Test(expected = IOException.class)
-    public void testExceptionWhenSendingMessageWhenStopped() throws IOException
+    @Test(expected = UncheckedIOException.class)
+    public void testExceptionWhenSendingMessageWhenStopped()
     {
         server.send(mock(Message.class), "");
     }
@@ -97,7 +97,7 @@ public class MockServerTest
         server.send(mock(Message.class), "");
     }
 
-    @Test(expected = NotSerializableException.class)
+    @Test(expected = UncheckedIOException.class)
     public void testExceptionWhenSendingUnserializableMessage() throws IOException
     {
         class UnserializableMessage implements Message {
@@ -108,7 +108,7 @@ public class MockServerTest
         server.send(new UnserializableMessage(), "client5");
     }
 
-    @Test(expected = IOException.class)
+    @Test(expected = UncheckedIOException.class)
     public void testExceptionWhenBroadcastingWithoutServerStarted() throws IOException
     {
         server.broadcast(mock(Message.class));
@@ -121,7 +121,7 @@ public class MockServerTest
         server.broadcast(mock(Message.class));
     }
 
-    @Test(expected = NotSerializableException.class)
+    @Test(expected = UncheckedIOException.class)
     public void testExceptionWhenBroadcastUnserializableMessage() throws IOException
     {
         class UnserializableMessage implements Message {

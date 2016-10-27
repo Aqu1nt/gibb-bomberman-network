@@ -39,14 +39,14 @@ public interface Server
    * @param clientId die Id des Ziel clients
    * @throws NullPointerException wenn die Message oder die clientId null ist
    */
-  void send(Message message, String clientId) throws IOException;
+  void send(Message message, String clientId);
 
   /**
    * Verschickt eine Nachricht an alle verbundenen Clients
    * @param message die Nachricht welche gebroadcastet wird
    * @throws NullPointerException wenn die Message null ist
    */
-  void broadcast(Message message) throws IOException;
+  void broadcast(Message message);
 
   /**
    * Registriert einen Handler welcher all eingehenden Nachrichten zusammen

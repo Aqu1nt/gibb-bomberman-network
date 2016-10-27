@@ -41,7 +41,7 @@ public interface ServerProxy
    * @param message Das Nachrichtenobjekt, welches an den Server gesendet werden soll.
    * @throws NullPointerException wenn die Message null ist
    */
-  void send(Message message) throws IOException;
+  void send(Message message);
 
   /**
    * Registriert einen Handler welcher mit jeder eingehenden Nachricht

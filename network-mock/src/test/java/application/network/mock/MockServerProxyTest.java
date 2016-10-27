@@ -129,4 +129,28 @@ public class MockServerProxyTest
         client.disconnect();
         client.connect("", "", 0);
     }
+
+    @Test
+    public void testSimulateLobbyFull() throws LobbyFullException, IOException, ClientIdInUseException
+    {
+        MockServerProxy.simulateLobbyFull();
+        MockServerProxy.simulateLobbyEmpty();
+        client.connect("", "", 0);
+        client.disconnect();
+        MockServerProxy.simulateLobbyFull();
+        thrown.expect(LobbyFullException.class);
+        client.connect("", "", 0);
+    }
+
+    @Test
+    public void testSimulateClientIdInUse() throws LobbyFullException, IOException, ClientIdInUseException
+    {
+        MockServerProxy.simulateClientIdInUse();
+        MockServerProxy.simulateClientIdFree();
+        client.connect("", "", 0);
+        client.disconnect();
+        MockServerProxy.simulateClientIdInUse();
+        thrown.expect(ClientIdInUseException.class);
+        client.connect("", "", 0);
+    }
 }

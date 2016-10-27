@@ -39,16 +39,40 @@ public class MockServerProxy implements ServerProxy
         get().messageHandlers.forEach(h -> h.accept(message));
     }
 
+    public static void simulateLobbyFull()
+    {
+        get().simulateLobbyFull = true;
+    }
+
+    public static void simulateLobbyEmpty()
+    {
+        get().simulateLobbyFull = false;
+    }
+
+    public static void simulateClientIdInUse()
+    {
+        get().simulateClientIdInUse = true;
+    }
+
+    public static void simulateClientIdFree()
+    {
+        get().simulateClientIdInUse = false;
+    }
+
     public static void reset()
     {
         get().connected = false;
         get().messageHandlers = new ArrayList<>();
         get().serverDisconnectedHandlers = new ArrayList<>();
+        get().simulateClientIdInUse = false;
+        get().simulateLobbyFull = false;
     }
 
     private boolean connected;
     private List<Consumer<Message>> messageHandlers;
     private List<Runnable> serverDisconnectedHandlers;
+    private boolean simulateLobbyFull;
+    private boolean simulateClientIdInUse;
 
     @Override
     public void connect(String clientId, String ip, int port) throws IOException, ClientIdInUseException, LobbyFullException
@@ -57,6 +81,12 @@ public class MockServerProxy implements ServerProxy
         Objects.requireNonNull(ip);
         if (connected) {
             throw new IOException("MockServerProxy is already connected!");
+        }
+        if (simulateLobbyFull) {
+            throw new LobbyFullException();
+        }
+        if (simulateClientIdInUse) {
+            throw new ClientIdInUseException();
         }
         connected = true;
     }

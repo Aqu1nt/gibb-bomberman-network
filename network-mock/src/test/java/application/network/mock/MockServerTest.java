@@ -10,9 +10,15 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mock;
 
 /**
@@ -56,10 +62,18 @@ public class MockServerTest
     @SuppressWarnings("unchecked")
     public void testSimulateClientConnect()
     {
-        Consumer<String> handler = mock(Consumer.class);
+        Function<String, Boolean> handler = mock(Function.class);
+        when(handler.apply(anyString())).thenReturn(true);
         server.addClientConnectedHandler(handler);
-        MockServer.simulateClientConnect("client3");
-        verify(handler).accept("client3");
+        assertThat(MockServer.simulateClientConnect("client3"), is(true));
+        verify(handler).apply("client3");
+
+        Function<String, Boolean> handler1 = id -> false;
+        Function<String, Boolean> handler2 = id -> true;
+        MockServer.reset();
+        server.addClientConnectedHandler(handler1);
+        server.addClientConnectedHandler(handler2);
+        assertThat(MockServer.simulateClientConnect("client"), is(false));
     }
 
     @Test
@@ -94,7 +108,8 @@ public class MockServerTest
     public void testSendMessageWhenServerStarted() throws IOException
     {
         server.listen(100);
-        server.send(mock(Message.class), "");
+        server.send(mock(Message.class), "client");
+        verify(server).send(any(Message.class), eq("client"));
     }
 
     @Test(expected = UncheckedIOException.class)
@@ -119,6 +134,7 @@ public class MockServerTest
     {
         server.listen(1000);
         server.broadcast(mock(Message.class));
+        verify(server).broadcast(any(Message.class));
     }
 
     @Test(expected = UncheckedIOException.class)
@@ -166,7 +182,7 @@ public class MockServerTest
     @SuppressWarnings("unchecked")
     public void testExceptionWhenAddConnectHandlerNull()
     {
-        server.addClientConnectedHandler(mock(Consumer.class));
+        server.addClientConnectedHandler(mock(Function.class));
         thrown.expect(NullPointerException.class);
         server.addClientConnectedHandler(null);
     }

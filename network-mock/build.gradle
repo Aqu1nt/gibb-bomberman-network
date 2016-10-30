@@ -7,5 +7,6 @@ test {
 }
 
 dependencies {
+    compile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
     compile project(":network-api");
 }

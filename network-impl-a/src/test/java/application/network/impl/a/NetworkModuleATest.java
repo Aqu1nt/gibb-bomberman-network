@@ -1,4 +1,4 @@
-package application.network.implA;
+package application.network.impl.a;
 
 import application.network.api.Network;
 import org.junit.Test;

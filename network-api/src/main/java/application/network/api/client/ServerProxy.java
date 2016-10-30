@@ -52,6 +52,23 @@ public interface ServerProxy
   void addMessageHandler(Consumer<Message> handler);
 
   /**
+   * Registriert einen speziellen Handler welcher nur die Nachrichten des
+   * gegebenen Typs oder eines Subtyps erhält
+   * @param msgType der Nachrichtentyp
+   * @param handler der Handler
+   * @param <T> der generische Typ aller Nachrichten
+   */
+  @SuppressWarnings("unchecked")
+  default <T extends Message> void addMessageHandler(Class<T> msgType, Consumer<T> handler)
+  {
+    addMessageHandler(msg -> {
+      if (msgType.isInstance(msg)) {
+        handler.accept((T) msg);
+      }
+    });
+  }
+
+  /**
    * Registriert einen Handler welcher in jedem Fall aufgerufen wird wenn
    * die Socketverbindung zum Server geschlossen wird
    * @param handler der Handler

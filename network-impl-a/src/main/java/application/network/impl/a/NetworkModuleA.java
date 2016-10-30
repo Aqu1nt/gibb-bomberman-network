@@ -1,4 +1,4 @@
-package application.network.implA;
+package application.network.impl.a;
 
 import application.network.api.NetworkModule;
 import application.network.api.client.ServerProxy;

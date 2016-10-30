@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.function.Consumer;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mock;
@@ -82,6 +83,7 @@ public class MockServerProxyTest
     public void testExceptionWhenSendWhileNotConnected() throws IOException
     {
         client.send(mock(Message.class));
+        verify(client).send(any(Message.class));
     }
 
     @Test

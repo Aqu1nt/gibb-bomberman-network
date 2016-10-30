@@ -13,17 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+import static org.mockito.Mockito.spy;
 
 public class MockServerProxy implements ServerProxy
 {
+    //Supplier to provide your own implementation like a mockito mock
+    public static Supplier<MockServerProxy> serverProxyFactory = () -> spy(new MockServerProxy());
 
+    // The singleton instance
     private static MockServerProxy instance;
 
     public synchronized static MockServerProxy get()
     {
         if (instance == null)
         {
-            instance = new MockServerProxy();
+            instance = serverProxyFactory.get();
         }
         return instance;
     }

@@ -14,8 +14,24 @@ subprojects {
 
     dependencies {
         testCompile group: 'junit', name: 'junit', version: '4.11'
-        compile group: 'org.powermock', name: 'powermock-api-mockito', version: '1.6.5'
-        compile group: 'org.powermock', name: 'powermock-module-junit4', version: '1.6.5'
+        testCompile group: 'org.powermock', name: 'powermock-api-mockito', version: '1.6.5'
+        testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: '1.6.5'
+    }
+
+    /**
+     * Pack all libs when creating the jar
+     */
+    jar {
+        dependsOn "jarLibs"
+    }
+
+    /**
+     * Define a simple task which copies all runtime dependencies
+     * into the /build/libs directory
+     */
+    task jarLibs(type: Copy) {
+        into "build/libs"
+        from configurations.runtime
     }
 
     //Test console output logging when running gradle build / gradle test etc..

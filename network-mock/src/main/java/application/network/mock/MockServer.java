@@ -12,16 +12,25 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+import static org.mockito.Mockito.spy;
 
 public class MockServer implements Server
 {
+    //Replace this in order to use your custom server implementation like a
+    //Mockito mock
+    public static Supplier<MockServer> serverFactory = () -> spy(new MockServer());
+
+    //The singleton instance
     private static MockServer instance;
 
     public synchronized static MockServer get()
     {
         if (instance == null)
         {
-            instance = new MockServer();
+            instance = serverFactory.get();
             reset();
         }
         return instance;
@@ -32,9 +41,11 @@ public class MockServer implements Server
         get().messageHandlers.forEach(m -> m.accept(message, clientId));
     }
 
-    public static void simulateClientConnect(String clientId)
+    public static boolean simulateClientConnect(String clientId)
     {
-        get().clientConnectedHandlers.forEach(c -> c.accept(clientId));
+        return !get().clientConnectedHandlers.stream()
+                .map(c -> c.apply(clientId))
+                .anyMatch(c -> !c) || get().clientConnectedHandlers.isEmpty();
     }
 
 
@@ -53,7 +64,7 @@ public class MockServer implements Server
 
     private boolean open;
     private List<BiConsumer<Message, String>> messageHandlers;
-    private List<Consumer<String>> clientConnectedHandlers;
+    private List<Function<String, Boolean>> clientConnectedHandlers;
     private List<Consumer<String>> clientDisconnectedHandlers;
 
     @Override
@@ -111,7 +122,7 @@ public class MockServer implements Server
     }
 
     @Override
-    public void addClientConnectedHandler(Consumer<String> clientConnectedHandler)
+    public void addClientConnectedHandler(Function<String, Boolean> clientConnectedHandler)
     {
         clientConnectedHandlers.add(Objects.requireNonNull(clientConnectedHandler));
     }

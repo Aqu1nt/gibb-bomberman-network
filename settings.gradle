@@ -4,4 +4,5 @@ include "network-api"
 include "network-mock"
 include "network-impl-a"
 include "network-impl-scala"
+include 'network-api-example'
 

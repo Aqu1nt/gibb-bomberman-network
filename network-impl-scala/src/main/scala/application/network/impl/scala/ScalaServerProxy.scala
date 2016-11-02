@@ -6,6 +6,7 @@ import java.util.function.Consumer
 
 import application.network.api.Message
 import application.network.api.client.ServerProxy
+import application.network.impl.scala.events.ClientId
 
 /**
   * Created by Emil on 29.10.2016.
@@ -18,7 +19,7 @@ class ScalaServerProxy extends ServerProxy
   override def connect(clientId: String, ip: String, port: Int): Unit = {
     socket = new Socket(ip, port)
     out = new ObjectOutputStream(socket.getOutputStream)
-    out.writeObject(new Message {})
+    out.writeObject(new ClientId(clientId))
   }
 
   override def disconnect(): Unit = {

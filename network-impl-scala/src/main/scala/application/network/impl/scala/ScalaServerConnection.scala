@@ -16,10 +16,14 @@ class ScalaServerConnection(val server: ScalaServer, val socket: Socket) extends
   val in = new ObjectInputStream(socket.getInputStream)
   val closedHandlers = ListBuffer[() => _]()
 
+  def send(obj: Object) : Unit = {
+    out.writeObject(obj)
+  }
+
   override def run(): Unit = {
     while (!socket.isClosed)
     {
-      val o = in.readObject
+      val o = in.readObject()
       if (o.isInstanceOf[Message])
       {
         print(o)

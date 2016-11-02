@@ -43,7 +43,7 @@ class ScalaServer() extends Server with Runnable
 
   override def send(message: Message, clientId: String): Unit = ???
 
-  override def broadcast(message: Message): Unit = ???
+  override def broadcast(message: Message): Unit = connections.foreach(c => c.send(message))
 
   override def addMessageHandler(handler: BiConsumer[Message, String]): Unit = messageHandlers += handler
 

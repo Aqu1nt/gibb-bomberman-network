@@ -30,6 +30,7 @@ public class MockServerProxy implements ServerProxy
         if (instance == null)
         {
             instance = serverProxyFactory.get();
+            reset();
         }
         return instance;
     }

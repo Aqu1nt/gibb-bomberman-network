@@ -1,0 +1,12 @@
+group 'bomberman'
+version '1.0'
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(":network-api");
+}

@@ -10,19 +10,19 @@ import java.util.List;
  */
 public class GameOver implements Message {
 
-    private List<HiscoreEntry> hiscore;
+    private List<HiscoreEntry> highscore;
     private String winnerName;
 
     public GameOver() {
-        this.hiscore = new ArrayList<>();
+        this.highscore = new ArrayList<>();
     }
 
-    public List<HiscoreEntry> getHiscore() {
-        return hiscore;
+    public List<HiscoreEntry> getHighscore() {
+        return highscore;
     }
 
-    public GameOver setHiscore(List<HiscoreEntry> hiscore) {
-        this.hiscore = hiscore;
+    public GameOver setHighscore(List<HiscoreEntry> highscore) {
+        this.highscore = highscore;
         return this;
     }
 

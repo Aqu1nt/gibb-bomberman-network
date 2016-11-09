@@ -1,0 +1,5 @@
+
+Dieses paket sollte im "protocol" Modul untergebracht sein.
+
+Es sind einfach gesagt die Messages die im Diagramm in den Unterlagen stehen. (Will heissen es ist sicherlich noch
+Verbeserungspotenzial vorhanden)

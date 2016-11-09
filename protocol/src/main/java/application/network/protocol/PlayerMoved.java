@@ -5,7 +5,7 @@ import application.network.api.Message;
 /**
  * Diese Nachricht wird verwendet um Spielerbewegungen in beide Richtungen zu kommunizieren.
  */
-public class PlayerMovement implements Message {
+public class PlayerMoved implements Message {
 
     public enum Direction
     {
@@ -22,7 +22,7 @@ public class PlayerMovement implements Message {
         return direction;
     }
 
-    public PlayerMovement setDirection(Direction direction) {
+    public PlayerMoved setDirection(Direction direction) {
         this.direction = direction;
         return this;
     }
@@ -31,7 +31,7 @@ public class PlayerMovement implements Message {
         return playerName;
     }
 
-    public PlayerMovement setPlayerName(String playerName) {
+    public PlayerMoved setPlayerName(String playerName) {
         this.playerName = playerName;
         return this;
     }

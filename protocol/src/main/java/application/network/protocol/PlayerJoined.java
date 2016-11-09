@@ -1,4 +1,4 @@
-package application.network.api.messagesGibb;
+package application.network.protocol;
 
 import application.network.api.Message;
 

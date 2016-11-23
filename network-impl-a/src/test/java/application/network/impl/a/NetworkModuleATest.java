@@ -1,8 +1,11 @@
 package application.network.impl.a;
 
 import application.network.api.Network;
+import application.network.api.client.ServerProxy;
+import application.network.api.server.Server;
+import application.network.impl.a.client.AServerProxy;
+import application.network.impl.a.server.AServer;
 import org.junit.Test;
-import org.powermock.reflect.Whitebox;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -16,8 +19,9 @@ public class NetworkModuleATest
     @Test
     public void testNetworkModuleARegistrationOnNetworkFactory()
     {
-        Network.getServer();
-        Network.getClient();
-        assertThat(Whitebox.getInternalState(Network.class, "usedModule"), is(instanceOf(NetworkModuleA.class)));
+        Server server = Network.getServer();
+        ServerProxy client = Network.getClient();
+        assertThat(server, is(instanceOf(AServer.class)));
+        assertThat(client, is(instanceOf(AServerProxy.class)));
     }
 }

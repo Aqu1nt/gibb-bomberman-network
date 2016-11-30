@@ -2,5 +2,6 @@ version '1.0'
 
 dependencies {
     compile project(":network-api");
-    compile project(":protocol");
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21';
+
 }

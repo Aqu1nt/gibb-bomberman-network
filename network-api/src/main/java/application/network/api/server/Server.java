@@ -23,6 +23,7 @@ public interface Server
    * Startet den Server auf dem angegebenen Port, sobald diese
    * Methode abgeschlossen ist, wird der Server alle neuen Verbindungen
    * welche auf diesem Port eingehen annehmen.
+   * Die Methode ist non-blocking.
    * @param port der Port auf welchem der Server gestartet wird
    * @throws IOException wenn der Port nicht geöffnet werden konnte
    */

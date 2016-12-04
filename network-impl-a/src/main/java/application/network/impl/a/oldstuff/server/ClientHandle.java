@@ -1,4 +1,4 @@
-package application.network.impl.a.server;
+package application.network.impl.a.oldstuff.server;
 
 import application.network.api.Message;
 
@@ -74,7 +74,7 @@ public class ClientHandle implements Closeable {
      */
     @Override
     public void close() {
-        try{
+        /*try{
             socket.close();
         }catch( IOException e ){
             String msg = "Failed to close socket.";
@@ -87,6 +87,7 @@ public class ClientHandle implements Closeable {
             }
             logger.error( msg );
         }
+        */
     }
 
 }

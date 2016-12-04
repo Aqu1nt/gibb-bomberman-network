@@ -3,8 +3,8 @@ package application.network.impl.a;
 import application.network.api.NetworkModule;
 import application.network.api.client.ServerProxy;
 import application.network.api.server.Server;
-import application.network.impl.a.client.ClientImpl;
-import application.network.impl.a.server.ServerImpl;
+import application.network.impl.a.oldstuff.server.client.ClientImpl;
+import application.network.impl.a.oldstuff.server.ServerImpl;
 
 
 /**

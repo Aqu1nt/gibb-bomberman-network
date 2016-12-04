@@ -1,4 +1,4 @@
-package application.network.impl.a.server;
+package application.network.impl.a.oldstuff.server;
 
 import application.network.api.Message;
 import application.network.api.server.Server;

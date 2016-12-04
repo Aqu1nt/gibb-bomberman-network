@@ -1,4 +1,4 @@
-package application.network.impl.a.client;
+package application.network.impl.a.oldstuff.server.client;
 
 import application.network.api.Message;
 import application.network.api.client.ClientIdInUseException;

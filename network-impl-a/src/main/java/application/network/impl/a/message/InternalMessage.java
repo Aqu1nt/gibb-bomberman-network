@@ -1,4 +1,4 @@
-package application.network.impl.a.internalMessages;
+package application.network.impl.a.message;
 
 import application.network.api.Message;
 

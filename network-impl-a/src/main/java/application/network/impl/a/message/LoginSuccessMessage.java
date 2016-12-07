@@ -1,4 +1,4 @@
-package application.network.impl.a.internalMessages;
+package application.network.impl.a.message;
 
 
 public class LoginSuccessMessage implements InternalMessage {

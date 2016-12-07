@@ -3,8 +3,6 @@ package application.network.impl.a;
 import application.network.api.NetworkModule;
 import application.network.api.client.ServerProxy;
 import application.network.api.server.Server;
-import application.network.impl.a.client.ClientImpl;
-import application.network.impl.a.server.ServerImpl;
 
 
 /**
@@ -14,12 +12,12 @@ public class NetworkModuleA implements NetworkModule {
 
     @Override
     public Server createServer() {
-        return new ServerImpl();
+        throw new UnsupportedOperationException( "Implementation not configured yet." );
     }
 
     @Override
     public ServerProxy createClient() {
-        return new ClientImpl();
+        throw new UnsupportedOperationException( "Implementation not configured yet." );
     }
 
 }

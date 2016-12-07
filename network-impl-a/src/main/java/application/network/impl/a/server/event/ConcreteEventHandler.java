@@ -29,8 +29,8 @@ public class ConcreteEventHandler implements EventManager {
         for( BiConsumer<Message,String> messageHandler : messageHandlers ){
             try{
                 messageHandler.accept( msg , playerName );
-            }catch( Exception e ){
-                logger.error( "One of the handlers throwed an exception." , e );
+            }catch( RuntimeException e ){
+                logger.error( "One of the handlers thrown a RuntimeException." , e );
             }
         }
         throw new UnsupportedOperationException("Not implemented yet");
@@ -38,17 +38,24 @@ public class ConcreteEventHandler implements EventManager {
 
     @Override
     public void fireClientDisconnected( String playerName ) {
+        for( Consumer<String> handler : disconnectedHandlers ){
+            try{
+                handler.accept( playerName );
+            }catch( RuntimeException e ){
+                logger.error( "A 'clientDisconnectedHandler' thrown a RuntimeException." , e );
+            }
+        }
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
     public void addMessageReceivedObserver( BiConsumer<Message,String> messageHandler ) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        messageHandlers.add( messageHandler );
     }
 
     @Override
     public void addClientDisconnectedObserver( Consumer<String> clientDisconnectedHandler ) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        disconnectedHandlers.add( clientDisconnectedHandler );
     }
 
 }

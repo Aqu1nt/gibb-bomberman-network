@@ -33,7 +33,6 @@ public class ConcreteEventHandler implements EventManager {
                 logger.error( "One of the handlers thrown a RuntimeException." , e );
             }
         }
-        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
@@ -45,7 +44,6 @@ public class ConcreteEventHandler implements EventManager {
                 logger.error( "A 'clientDisconnectedHandler' thrown a RuntimeException." , e );
             }
         }
-        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override

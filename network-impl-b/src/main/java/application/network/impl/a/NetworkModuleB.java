@@ -3,23 +3,23 @@ package application.network.impl.a;
 import application.network.api.NetworkModule;
 import application.network.api.client.ServerProxy;
 import application.network.api.server.Server;
-import application.network.impl.a.client.AServerProxy;
-import application.network.impl.a.server.AServer;
+import application.network.impl.a.client.BServerProxy;
+import application.network.impl.a.server.BServer;
 
 /**
  * Implementierung des Netzwerk Modules der Gruppe A!
  */
-public class NetworkModuleA implements NetworkModule
+public class NetworkModuleB implements NetworkModule
 {
     @Override
     public Server createServer()
     {
-        return new AServer();
+        return new BServer();
     }
 
     @Override
     public ServerProxy createClient()
     {
-        return new AServerProxy();
+        return new BServerProxy();
     }
 }

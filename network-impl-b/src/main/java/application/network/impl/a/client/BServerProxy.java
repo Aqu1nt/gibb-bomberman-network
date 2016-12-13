@@ -8,7 +8,7 @@ import application.network.api.client.ServerProxy;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-public class AServerProxy implements ServerProxy
+public class BServerProxy implements ServerProxy
 {
     @Override
     public void connect(String clientId, String ip, int port) throws IOException, ClientIdInUseException, LobbyFullException

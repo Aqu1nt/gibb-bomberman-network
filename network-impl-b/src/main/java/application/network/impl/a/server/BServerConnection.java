@@ -7,14 +7,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class AServerConnection
+public class BServerConnection
 {
     private String clientId;
-    private AServer server;
+    private BServer server;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
 
-    public AServerConnection(Socket socket, AServer server) throws IOException
+    public BServerConnection(Socket socket, BServer server) throws IOException
     {
         this.server = server;
         outputStream = new ObjectOutputStream(socket.getOutputStream());

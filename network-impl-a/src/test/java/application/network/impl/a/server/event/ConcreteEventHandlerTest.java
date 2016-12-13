@@ -115,10 +115,10 @@ public class ConcreteEventHandlerTest {
         final TestMessage msg2 = new TestMessage( "msg2" );
 
         class MsgHandler implements BiConsumer<Message,String> , Comparable<Object> {
-            private boolean gotCalled = false;
+            private int callCounter = 0;
             @Override public void accept( Message message , String playerName ) {
                 synchronized( testLock ){
-                    gotCalled = true;
+                    callCounter++;
                     throw new RuntimeException( "Try to bring the manager into trouble by throwing this one. Manager MUST log this exception as an error. But he MUST continue work after that." );
                 }
             }
@@ -140,14 +140,14 @@ public class ConcreteEventHandlerTest {
         // Some sleeping may be required in the future here. To also take care in case the handlers get called async.
 
         synchronized( testLock ){
-            Assert.assertTrue( "Message handler badly didn't receive the message." , msgHandler1.gotCalled );
-            Assert.assertTrue( "Message handler badly didn't receive the message." , msgHandler2.gotCalled );
+            Assert.assertEquals( "Message handler badly didn't receive the message." , 1 , msgHandler1.callCounter );
+            Assert.assertEquals( "Message handler badly didn't receive the message." , 1 , msgHandler2.callCounter );
         }
 
         // Reset and try again to test if the manager is ready for new messages even there were exceptions before.
         synchronized( testLock ){
-            msgHandler1.gotCalled = false;
-            msgHandler2.gotCalled = false;
+            msgHandler1.callCounter = 0;
+            msgHandler2.callCounter = 0;
         }
         eventManager.fireMessageReceived( msg2 , paulName );
 
@@ -156,8 +156,8 @@ public class ConcreteEventHandlerTest {
 
         // Assert again.
         synchronized( testLock ){
-            Assert.assertTrue( "Message handler badly didn't receive the message." , msgHandler1.gotCalled );
-            Assert.assertTrue( "Message handler badly didn't receive the message." , msgHandler2.gotCalled );
+            Assert.assertEquals( "Message handler badly didn't receive the message." , 1 , msgHandler1.callCounter );
+            Assert.assertEquals( "Message handler badly didn't receive the message." , 1 , msgHandler2.callCounter );
         }
 
     }

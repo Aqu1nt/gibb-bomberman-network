@@ -31,7 +31,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class NetworkModuleBTests
 {
     @Test
-    public void testNetworkModuleARegistrationOnNetworkFactory()
+    public void module_should_register_itself_on_network_factory()
     {
         Server server = Network.getServer();
         ServerProxy client = Network.getClient();

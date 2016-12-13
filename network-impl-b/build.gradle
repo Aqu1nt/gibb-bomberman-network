@@ -1,5 +1,13 @@
 version '1.0'
 
+test {
+    filter {
+        includeTestsMatching "*.NetworkModuleBTests"
+    }
+}
+
 dependencies {
-    compile project(":network-api");
+    compile project(":network-api")
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.12'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.8'
 }

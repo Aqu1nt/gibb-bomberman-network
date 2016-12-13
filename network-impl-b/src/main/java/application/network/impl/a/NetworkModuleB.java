@@ -7,7 +7,7 @@ import application.network.impl.a.client.BServerProxy;
 import application.network.impl.a.server.BServer;
 
 /**
- * Implementierung des Netzwerk Modules der Gruppe A!
+ * Implementierung des Netzwerk Modules der Gruppe B!
  */
 public class NetworkModuleB implements NetworkModule
 {

@@ -3,7 +3,7 @@ package application.network.impl.a.utils;
 import java.util.function.Function;
 
 /**
- * Class supplying some static helper methods
+ * Class providing some static helper methods
  */
 public class StaticHelpers
 {

@@ -25,7 +25,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
     BServerTest.class,
     NetworkConnectionTest.class,
     BServerConnectionTest.class,
-    BServerProxyTest.class
+    BServerProxyTest.class,
+    IntegrationTest.class
 })
 public class NetworkModuleBTests
 {

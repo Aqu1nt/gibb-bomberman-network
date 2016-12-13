@@ -76,14 +76,14 @@ public class BServerProxy extends NetworkConnection implements ServerProxy
     @Override
     public void disconnect()
     {
-        serverDisconnectedHandlers.forEach(Runnable::run);
+        close();
     }
 
     @Override
     public synchronized void close()
     {
         super.close();
-        disconnect();
+        serverDisconnectedHandlers.forEach(Runnable::run);
     }
 
     @Override

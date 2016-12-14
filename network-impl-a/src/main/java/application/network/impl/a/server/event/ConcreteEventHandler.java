@@ -4,7 +4,8 @@ import application.network.api.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -15,8 +16,8 @@ public class ConcreteEventHandler implements EventManager {
 // memory /////////////////////////////////////////////////////////////////////
 
     private final Logger logger = LoggerFactory.getLogger( this.getClass() );
-    private final ConcurrentSkipListSet<BiConsumer<Message,String>> messageHandlers = new ConcurrentSkipListSet<>();
-    private final ConcurrentSkipListSet<Consumer<String>> disconnectedHandlers = new ConcurrentSkipListSet<>();
+    private final List<BiConsumer<Message,String>> messageHandlers = new ArrayList<>();
+    private final List<Consumer<String>> disconnectedHandlers = new ArrayList<>();
 
 
 // constructors ///////////////////////////////////////////////////////////////

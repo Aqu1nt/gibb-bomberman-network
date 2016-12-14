@@ -32,7 +32,7 @@ public class ConcreteEventHandlerTest {
         final String peterName = "Peter";
         final String hansName = "Hans";
         final String heidiName = "Heidi";
-        EventManager eventManager = serverFactory.createEventManager();
+        EventManager eventManager = serverFactory.getEventManager();
 
         class DisconnectedHandler implements Consumer<String>,Comparable<Object> {
             private final String myName;
@@ -104,7 +104,7 @@ public class ConcreteEventHandlerTest {
         final Object testLock = new Object();
         final String peterName = "Peter";
         final String paulName = "Paul";
-        EventManager eventManager = serverFactory.createEventManager();
+        EventManager eventManager = serverFactory.getEventManager();
 
         class TestMessage implements Message {
             private final String txt;

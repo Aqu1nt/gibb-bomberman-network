@@ -2,6 +2,9 @@ package application.network.impl.a.server;
 
 import application.network.api.Message;
 import application.network.api.server.Server;
+import application.network.impl.a.server.connection.Connection;
+import application.network.impl.a.server.connection.ConnectionFactory;
+import application.network.impl.a.server.connection.ConnectionHandler;
 import application.network.impl.a.server.event.EventManager;
 import application.network.impl.a.server.security.SecurityManager;
 import org.slf4j.Logger;
@@ -58,7 +61,7 @@ class ConcreteServer implements Server, Closeable {
             socket = new ServerSocket( port );
         }
         executorService.execute( ()->{
-            logger.trace( "Thread '"+Thread.currentThread().getName()+"' spawned to listen on server socket." );
+            logger.trace( "Thread spawned to listen on server socket." );
             logger.info( "Server is listening on port "+ port +" ..." );
             serverMainLoop();
         });
@@ -69,11 +72,13 @@ class ConcreteServer implements Server, Closeable {
         synchronized( this ){
             hasShutdownRequest = true;
         }
+        // TODO: interrupt listener (by closing socket or interrupt the thread??)
     }
 
     @Override
     public void send( Message message , String playerName ) {
-        connectionHandler.messageSend( message , playerName );
+        throw new UnsupportedOperationException( "Not implemented yet" ); // TODO: implement this method.
+//        connectionHandler.messageSend( message , playerName );
     }
 
     @Override
@@ -83,17 +88,20 @@ class ConcreteServer implements Server, Closeable {
 
     @Override
     public void addMessageHandler( BiConsumer<Message,String> handler ) {
-        throw new UnsupportedOperationException( "Not implemented yet" ); // TODO: implement this method.
+        eventManager.addMessageReceivedObserver( handler );
     }
 
     @Override
     public void addClientConnectedHandler( Function<String,Boolean> handler ) {
-        throw new UnsupportedOperationException( "Not implemented yet" ); // TODO: implement this method.
+        eventManager.addMessageReceivedObserver( ( msg , playerName )->{
+            // TODO: Call only when message is of correct type.
+            handler.apply( playerName );
+        });
     }
 
     @Override
     public void addClientDisconnectedHandler( Consumer<String> handler ) {
-        throw new UnsupportedOperationException( "Not implemented yet" ); // TODO: implement this method.
+        eventManager.addClientDisconnectedObserver( handler );
     }
 
     @Override
@@ -124,18 +132,17 @@ class ConcreteServer implements Server, Closeable {
 
             // Delegate work to other thread to continue listening for new clients.
             executorService.execute( ()->{
-                logger.trace( "Thread '"+Thread.currentThread().getName()+"' now takes care of newly connected client." , clientSocket );
-                clientHandler( clientSocket );
+                logger.trace( "Thread '"+Thread.currentThread().getName()+"' now takes care of newly connected client." );
+                handleNewTcpClient( clientSocket );
             });
         }
     }
 
     /**
-     * Delegates the handling of the clients to the connection handler.
      * @param clientSocket
      *      The socket of the client to handle.
      */
-    private void clientHandler( Socket clientSocket ){
+    private void handleNewTcpClient( Socket clientSocket ){
         final Connection connection = connectionFactory.create( clientSocket );
         connectionHandler.connectionCreated( connection );
     }

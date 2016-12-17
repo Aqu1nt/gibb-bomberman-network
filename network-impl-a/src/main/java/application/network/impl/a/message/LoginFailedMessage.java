@@ -32,4 +32,18 @@ public class LoginFailedMessage implements InternalMessage {
         return this;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LoginFailedMessage that = (LoginFailedMessage) o;
+
+        return getReason() == that.getReason();
+    }
+
+    @Override
+    public int hashCode() {
+        return getReason() != null ? getReason().hashCode() : 0;
+    }
 }

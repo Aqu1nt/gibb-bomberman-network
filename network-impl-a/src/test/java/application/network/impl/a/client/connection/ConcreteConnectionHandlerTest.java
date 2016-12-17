@@ -2,7 +2,7 @@ package application.network.impl.a.client.connection;
 
 import application.network.api.Message;
 import application.network.impl.a.client.event.ConcreteEventHandler;
-import application.network.impl.a.internalMessages.LoginSuccessMessage;
+import application.network.impl.a.message.LoginSuccessMessage;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

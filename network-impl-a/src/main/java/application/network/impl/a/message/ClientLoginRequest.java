@@ -1,4 +1,4 @@
-package application.network.impl.a.internalMessages;
+package application.network.impl.a.message;
 
 /**
  * Created by nschaefli on 12/15/16.

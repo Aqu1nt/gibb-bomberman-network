@@ -8,10 +8,10 @@ import application.network.impl.a.client.connection.Connection;
 import application.network.impl.a.client.connection.ConnectionFactory;
 import application.network.impl.a.client.connection.ConnectionHandler;
 import application.network.impl.a.client.event.EventManager;
-import application.network.impl.a.internalMessages.ClientLoginRequest;
-import application.network.impl.a.internalMessages.InternalMessage;
-import application.network.impl.a.internalMessages.LoginFailedMessage;
-import application.network.impl.a.internalMessages.LoginSuccessMessage;
+import application.network.impl.a.message.ClientLoginRequest;
+import application.network.impl.a.message.InternalMessage;
+import application.network.impl.a.message.LoginFailedMessage;
+import application.network.impl.a.message.LoginSuccessMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

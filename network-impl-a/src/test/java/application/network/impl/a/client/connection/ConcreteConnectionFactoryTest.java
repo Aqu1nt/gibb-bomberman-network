@@ -1,27 +1,18 @@
 package application.network.impl.a.client.connection;
 
-import application.network.impl.a.internalMessages.ClientLoginRequest;
-import application.network.impl.a.internalMessages.InternalMessage;
+import application.network.impl.a.message.ClientLoginRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Handler;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by nschaefli on 12/4/16.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class ConcreteConnectionFactoryTest {
 

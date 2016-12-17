@@ -1,8 +1,8 @@
 package application.network.impl.a.client.connection;
 
 import application.network.api.Message;
-import application.network.impl.a.internalMessages.LoginFailedMessage;
-import application.network.impl.a.internalMessages.LoginSuccessMessage;
+import application.network.impl.a.message.LoginFailedMessage;
+import application.network.impl.a.message.LoginSuccessMessage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

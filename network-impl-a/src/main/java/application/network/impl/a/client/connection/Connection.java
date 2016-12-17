@@ -27,4 +27,10 @@ public interface Connection {
      * @throws InterruptedException Wenn der aktuelle Thread unterbrochen wurde.
      */
     Message read() throws InterruptedException;
+
+    /**
+     * Startet ein asynchronen Lesevorgang.
+     * @throws IllegalStateException Jeder erneute Aufruf dieser Methode loest eine IllegalStateException aus.
+     */
+    void startReading();
 }

@@ -27,17 +27,11 @@ public class ConcreteConnectionFactory implements ConnectionFactory  {
      */
     @Override
     public Connection create(Socket serverConnection) throws IOException{
+
         try
         {
             log.trace("Erstelle neue Verbindungswrapper.");
-            ConcreteConnection concreteConnection = new ConcreteConnection(serverConnection, handler);
-
-            log.debug("Rufe den connectionCreated event auf.");
-            handler.connectionCreated(concreteConnection);
-
-            log.trace("Starte Lesevorgang.");
-            concreteConnection.startReading();
-            return concreteConnection;
+            return new ConcreteConnection(serverConnection, handler);
         }
         catch (IOException ex)
         {

@@ -1,5 +1,7 @@
 package application.network.impl.a.client.connection;
 
+import application.network.impl.a.internalMessages.ClientLoginRequest;
+import application.network.impl.a.internalMessages.InternalMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +46,10 @@ public class ConcreteConnectionFactoryTest {
         PipedInputStream pin = new PipedInputStream(pout);
         ObjectOutputStream out = new ObjectOutputStream(pout);
 
+        String clientId = "testclient1";
+        ClientLoginRequest loginRequest = new ClientLoginRequest();
+        loginRequest.setClientId("testclient1");
+
         when(socket.getOutputStream()).thenReturn(new ByteArrayOutputStream());
         when(socket.getInputStream()).thenReturn(pin);
         when(socket.isConnected()).thenReturn(true);
@@ -52,8 +58,6 @@ public class ConcreteConnectionFactoryTest {
 
         assertNotNull("Die Verbindung darf nicht null sein.", connection);
         assertTrue("Die Verbindung muss von dem typ ConcreteConnection sein.", connection instanceof ConcreteConnection);
-        verify(handler, times(1)).connectionCreated(connection);
-        assertTrue("Verbindung muss im lesenden zustand sein.", ((ConcreteConnection) connection).isReading());
 
         connection.shutdown();
         verify(handler, times(1)).connectionClosed();

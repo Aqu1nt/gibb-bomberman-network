@@ -155,7 +155,7 @@ public class ConcreteConnection implements Connection {
      *
      * @throws IllegalStateException Wenn der Lesevorgang bereits gestartet wurde.
      */
-    void startReading() {
+    public void startReading() {
         if(messageListener.getState() == Thread.State.NEW)
             messageListener.start();
         else
@@ -172,6 +172,10 @@ public class ConcreteConnection implements Connection {
         return messageListener.getState() != Thread.State.NEW && messageListener.getState() != Thread.State.TERMINATED;
     }
 
+    /**
+     * Liest Nachrichten bis der aktuelle Thread unterbrochen wird
+     * oder die Verbindung geschlossen wird.
+     */
     private void readMessages()
     {
         try
@@ -179,9 +183,9 @@ public class ConcreteConnection implements Connection {
             while(socket.isConnected())
             {
                 Message message = readMessage();
-                if (message == null) {
+                if (message == null)
                     continue;
-                }
+
                 handler.messageReceived(message);
             }
         }
@@ -197,6 +201,14 @@ public class ConcreteConnection implements Connection {
         }
     }
 
+    /**
+     * Liest eine Nachricht und giebt diese zurueck.
+     * Sollte der Lesevorgang unterbrochen werden gibt die Methode null zurueck.
+     *
+     * @return Die erhaltenen Nachricht oder null wenn ein nicht kritischer Fehler aufgetreten ist.
+     * @throws InterruptedException     Wenn der Thread unterbrochen wurde.
+     * @throws InterruptedIOException   Wenn die unterliegenden Streams am ende sind oder die Streams korrupt sind.
+     */
     private Message readMessage() throws InterruptedException, InterruptedIOException
     {
         try
@@ -233,6 +245,7 @@ public class ConcreteConnection implements Connection {
             log.warn("Ignoriere inkompatible Nachricht. Nur Nachrichten welche das Message Interface implementieren werden von der Netzwerkimplementierung A unterstuetzt.");
         }
 
+        //workaround da java keine tailcall optimierung behaerst und ich keine zweite schlaufe verwenden moechte.
         return null;
     }
 }

@@ -14,8 +14,6 @@ public interface ConnectionHandler {
      *
      * @param serverConnection Die neu erzeugte Server Verbindung.
      *
-     * @throws application.network.api.client.LobbyFullException        Wenn der Server die Anmeldung abgelehnt hat weil keine Lobby mehr Platz hat.
-     * @throws application.network.api.client.ClientIdInUseException    Wenn ein Client bereits mit der selben Id angemeldet ist und der Server die neue Verbindung aus diesem Grund ablehnt.
      * @throws IllegalStateException Wenn diese Methode aufgerufen wurde wenn bereits eine Clientverbindung aufgebaut ist.
      */
     void connectionCreated(Connection serverConnection);
@@ -55,4 +53,9 @@ public interface ConnectionHandler {
      * @throws NullPointerException Wenn die Nachricht null ist.
      */
     void send(Message message);
+
+    /**
+     * Schliesst die aktuelle Verbindung zum Server.
+     */
+    void shutdown();
 }

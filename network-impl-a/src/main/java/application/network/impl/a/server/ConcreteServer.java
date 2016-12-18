@@ -158,7 +158,7 @@ class ConcreteServer implements Server, Closeable {
                 return;
             }
             new Thread( ()->{
-                logger.trace( "Handle newly connected tcp client." );
+                logger.trace( "Handle newly connected tcp client "+ clientSocket.getInetAddress().getHostAddress() +":"+clientSocket.getPort() );
                 handleNewConnection( clientSocket );
             }).start();
         }
@@ -182,7 +182,7 @@ class ConcreteServer implements Server, Closeable {
                         try{
                             handler.accept( clientHandle.getPlayerName() );
                         }catch( RuntimeException e ){
-                            logger.error( "A disconnect handler trowed an exception:" , e );
+                            logger.warn( "A disconnect handler trowed an exception:" , e );
                         }
                     }
                 }
@@ -199,13 +199,13 @@ class ConcreteServer implements Server, Closeable {
             logger.trace( "Prepare external message for delegation" );
             synchronized( clients ){
                 if( !clients.contains(clientHandle) ){
-                    logger.error( "Message dropped. Client isn't authenticated." );
+                    logger.info( "Message dropped. Client isn't authenticated." );
                     clientHandle.send( new LoginFailedMessage().setReason(LoginFailedMessage.LoginFailedReason.ACCESS_DENIED) );
                     return;
                 }
             }
             synchronized( messageHandlers ){
-                logger.debug( "Delegate message of type '"+msg.getClass().getName()+"' to "+ messageHandlers.size() +" registered handlers." );
+                logger.trace( "Delegate message of type '"+msg.getClass().getName()+"' to "+ messageHandlers.size() +" registered handlers." );
                 for( BiConsumer<Message,String> handler : messageHandlers ){
                     handler.accept( msg , clientHandle.getPlayerName() );
                 }
@@ -224,7 +224,7 @@ class ConcreteServer implements Server, Closeable {
         if( msg instanceof ClientLoginRequest ){
             ClientLoginRequest clientLoginRequest = (ClientLoginRequest)msg;
             if( clientHandle.getPlayerName() != null ){
-                logger.error( "Client '"+ clientHandle.getPlayerName() +"' attempt to authenticate twice." );
+                logger.warn( "Client '"+ clientHandle.getPlayerName() +"' attempt to authenticate twice." );
                 return;
             }
             String playerName = clientLoginRequest.getClientId();
@@ -235,7 +235,7 @@ class ConcreteServer implements Server, Closeable {
                 if( clients.stream().anyMatch(clientHandle::equalsInName) ){
                     // There is already a client registered using this name.
                     clientHandle.setPlayerName( null );
-                    logger.debug( "Name '"+ playerName +"' already in use. Reject client." );
+                    logger.info( "Name '"+ playerName +"' already in use. Reject client." );
                     clientHandle.send( new LoginFailedMessage().setReason(LoginFailedMessage.LoginFailedReason.NAME_ALREADY_USED) );
                     clientHandle.close();
                     return;
@@ -245,7 +245,7 @@ class ConcreteServer implements Server, Closeable {
             // Ask connectedHandlers whether they all accept the new client.
             boolean accepted = true;
             synchronized( clientConnectedHandlers ){
-                logger.debug( "Ask " +clientConnectedHandlers.size() +" predicates what to do with new player." );
+                logger.trace( "Ask " +clientConnectedHandlers.size() +" predicates what to do with new player." );
                 for( Function<String,Boolean> handler : clientConnectedHandlers ){
                     if( handler != null && !handler.apply(playerName) ){
                         accepted = false;

@@ -84,7 +84,6 @@ public class ClientHandle implements Connection, Closeable {
                     throw new RuntimeException("Received object is of invalid type. Super type "+Message.class.getName()+" missing.\n\tExpected: "+Message.class.getName()+"\n\t  Actual: "+obj.getClass().getName());
                 }
                 Message msg = (Message)obj;
-                logger.trace( "Delegate message to "+ messageHandlers.size() +" registered handlers." );
                 for( Consumer<Message> handler : messageHandlers ){
                     handler.accept( msg );
                 }
@@ -96,7 +95,7 @@ public class ClientHandle implements Connection, Closeable {
         try{
             objOStream.writeObject( message );
         }catch( IOException e ){
-            logger.error( "Failed to send message due to "+ e.getClass().getName() +"." , e );
+            logger.error( "Failed to send message." , e );
         }
     }
 

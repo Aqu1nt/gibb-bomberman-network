@@ -1,9 +1,6 @@
-package application.network.impl.a.server.security;
+package application.network.impl.a.server;
 
-import java.util.function.Predicate;
-
-
-public interface SecurityManager extends SecurityContext {
+public class ConcreteServerTest {
 
 
 // memory /////////////////////////////////////////////////////////////////////
@@ -14,6 +11,5 @@ public interface SecurityManager extends SecurityContext {
 
 // methods ////////////////////////////////////////////////////////////////////
 
-    void addClientAcceptRestriction( Predicate<String> predicate );
 
 }

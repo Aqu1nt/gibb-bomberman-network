@@ -5,6 +5,6 @@ import java.net.Socket;
 
 public interface ConnectionFactory {
 
-    Connection create( Socket socket );
+    ClientHandle createClientHandle( Socket socket );
 
 }

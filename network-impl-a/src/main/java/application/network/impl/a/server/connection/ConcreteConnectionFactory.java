@@ -5,25 +5,8 @@ import java.net.Socket;
 
 public class ConcreteConnectionFactory implements ConnectionFactory {
 
-
-// memory /////////////////////////////////////////////////////////////////////
-
-    private final ConnectionHandler connectionHandler;
-
-
-// constructors ///////////////////////////////////////////////////////////////
-
-    public ConcreteConnectionFactory( ConnectionHandler connectionHandler ){
-        this.connectionHandler = connectionHandler;
+    public ClientHandle createClientHandle( Socket socket ){
+        return new ClientHandle( socket );
     }
-
-
-// methods ////////////////////////////////////////////////////////////////////
-
-    @Override
-    public Connection create( Socket socket ) {
-        return new ConcreteConnection( socket , connectionHandler );
-    }
-
 
 }

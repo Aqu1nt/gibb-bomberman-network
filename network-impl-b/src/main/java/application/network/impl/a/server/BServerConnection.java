@@ -15,7 +15,7 @@ public class BServerConnection extends NetworkConnection
     @Getter
     private String clientId;
 
-    private BServer server;
+    private final BServer server;
 
     public BServerConnection(Socket socket, BServer server)
     {

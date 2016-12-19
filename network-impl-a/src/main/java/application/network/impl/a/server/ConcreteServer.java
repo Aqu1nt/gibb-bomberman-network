@@ -82,7 +82,6 @@ class ConcreteServer implements Server, Closeable {
             if( listenerThread != null ) listenerThread.interrupt();
         }
         try{
-            // TODO: How to synchronize to prevent nullPointer.
             if( listenerThread != null ) listenerThread.join();
         }catch( InterruptedException e ){
             logger.error( "Failed to join with listener thread." , e );
@@ -147,6 +146,9 @@ class ConcreteServer implements Server, Closeable {
         shutdown();
     }
 
+    /**
+     * Blocks, receives new clients and delegate them to the {@link #handleNewConnection(Socket)} method.
+     */
     private void serverMainLoop(){
         while( !hasShutdownRequest ){
             Socket clientSocket;
@@ -164,6 +166,11 @@ class ConcreteServer implements Server, Closeable {
         }
     }
 
+    /**
+     * Handles a client intermediately after he connected to this server.
+     * @param socket
+     *      The new client.
+     */
     private void handleNewConnection( Socket socket ){
         ClientHandle clientHandle = connectionFactory.createClientHandle( socket );
         clientHandle.addMessageHandler( ( Message msg )->{
@@ -191,6 +198,14 @@ class ConcreteServer implements Server, Closeable {
         clientHandle.listen();
     }
 
+    /**
+     * Handles the received message. If the message is an internal message it will delegate it to the internal message
+     * handling method. Else it will propagate the message to the registered handlers.
+     * @param clientHandle
+     *      The client handle where the message came from.
+     * @param msg
+     *      The received message.
+     */
     private void handleMessage( ClientHandle clientHandle , Message msg ){
         if( msg instanceof InternalMessage ){
             logger.trace( "Handle internal Message of type '"+msg.getClass().getName()+"'" );

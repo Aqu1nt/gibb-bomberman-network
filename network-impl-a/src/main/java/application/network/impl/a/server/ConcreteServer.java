@@ -54,6 +54,7 @@ class ConcreteServer implements Server, Closeable {
     @Override
     public void listen( int port ) throws IOException, IllegalStateException {
         Runnable listenerTask = ()->{
+            logger.info( "Listen on port "+ port );
             serverMainLoop();
             synchronized( this ){
                 listenerThread = null;  // Set back to null if no longer running.

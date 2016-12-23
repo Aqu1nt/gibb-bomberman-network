@@ -1,9 +1,12 @@
 package application.network.protocol;
 
+import application.network.api.Message;
+
+
 /**
  * Diese Nachricht wird verwendet um allen Clients die getroffenen Spieler mitzuteilen.
  */
-public class PlayerHit {
+public class PlayerHit implements Message {
 
     private String playerName;
 

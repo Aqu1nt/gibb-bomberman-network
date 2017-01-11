@@ -36,6 +36,7 @@ public class ClientHandle implements Connection, Closeable {
     ClientHandle( Socket socket ){
         this.socket = socket;
 
+        // Setup the output stream for this client.
         try{
             objOStream = new ObjectOutputStream( socket.getOutputStream() );
             objOStream.flush();
@@ -44,6 +45,7 @@ public class ClientHandle implements Connection, Closeable {
             return;
         }
 
+        // Setup the input stream for this client.
         try{
             objIStream = new ObjectInputStream(socket.getInputStream());
         }catch( IOException e ){
@@ -61,7 +63,7 @@ public class ClientHandle implements Connection, Closeable {
      */
     public void listen(){
         synchronized( listenMutex ){
-            while( true ){ // <-- TODO: handle shutdown.
+            while( true ){ // <-- TODO: Break currently is achieved with exception handing. Do explicitly handle break.
                 logger.debug( "Blocking until next message arrives ..." );
                 Object obj;
                 try{

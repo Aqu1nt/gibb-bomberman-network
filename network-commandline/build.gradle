@@ -1,0 +1,9 @@
+version '1.0'
+
+dependencies {
+    compile project(":network-api");
+    compile project(":protocol");
+    compile project(":network-impl-a");
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21';
+    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.21';
+}

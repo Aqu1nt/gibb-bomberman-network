@@ -42,9 +42,7 @@ class ConcreteServer implements Server, Closeable {
 
 // constructors ///////////////////////////////////////////////////////////////
 
-    ConcreteServer(
-            ConnectionFactory connectionFactory
-    ){
+    ConcreteServer( ConnectionFactory connectionFactory ){
         this.connectionFactory = connectionFactory;
     }
 

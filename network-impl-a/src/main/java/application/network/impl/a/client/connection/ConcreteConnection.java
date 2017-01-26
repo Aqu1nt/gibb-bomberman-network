@@ -163,16 +163,6 @@ public class ConcreteConnection implements Connection {
     }
 
     /**
-     * true wenn auf neu eingehende Nachrichten gewartet wird.
-     * @return true wenn auf neu eingehende Nachrichten gewartet wird.
-     */
-    boolean isReading()
-    {
-        log.trace("Momentaner Lesestatus ist " + messageListener.getState().name());
-        return messageListener.getState() != Thread.State.NEW && messageListener.getState() != Thread.State.TERMINATED;
-    }
-
-    /**
      * Liest Nachrichten bis der aktuelle Thread unterbrochen wird
      * oder die Verbindung geschlossen wird.
      */
